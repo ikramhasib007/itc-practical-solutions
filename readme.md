@@ -2,6 +2,37 @@
 
 # Ikram Ud Daula
 
+## Instructions
+
+> Create `prod.env` file at `api-engine/config/` and copy and paste the env details
+
+```
+HTTP_PORT=4001
+DATABASE_URL="postgresql://postgres:1234@localhost:5432/itc_solutions?schema=public"
+JWT_SECRET=boPhVS3jytJKDQGLAFNvEuNZtTFErMiw
+CORS=http://localhost:3000
+```
+
+- postgresql://[USERNAME]:[PASSWORD]@localhost:5432/[DATABASE_NAME]?schema=public
+
+> Create `.env.production.local` file at `client/` and copy and paste the env details
+
+```
+BASE_URL=http://localhost:3000
+API_URL=http://localhost:4001/graphql
+SUBSCRIPTION_URL=http://localhost:4001/graphql
+```
+
+And then run from project root directory
+
+```
+cd api-engine && pnpm install && pnpm migrate && cd ../client && pnpm install && cd .. && pnpm install && pnpm build && pnpm start
+```
+
+Then go the url at `http://localhost:3000` :)
+
+## More details below
+
 ## API Engine
 
 - Make sure you have installed PostgreSQL in your machine at `5432` port

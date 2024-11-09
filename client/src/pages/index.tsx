@@ -194,13 +194,7 @@ export default function Layout({ title, children }: LayoutProps) {
 
         <main className='py-10 lg:pl-72'>
           <div className='relative px-4 sm:px-6 lg:px-8'>
-            {title ? (
-              <div className='max-w-7xl mx-auto px-4 sm:px-6 md:px-8'>
-                <h1 className='text-2xl font-semibold text-gray-900'>
-                  {title}
-                </h1>
-              </div>
-            ) : null}
+            {/* Your content */}
             <TransactionHistory />
           </div>
         </main>
