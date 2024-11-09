@@ -16,6 +16,7 @@
     "lint:fix": "eslint --fix",
     "prettier": "prettier --config .prettierrc --check .",
     "prettier:fix": "prettier --config .prettierrc --write .",
+    "migrate:test": "env-cmd -f ./config/test.env npx prisma migrate dev",
     "test": "env-cmd -f ./config/test.env jest --watchAll --detectOpenHandles --runInBand --testTimeout=12000",
     "clean": "rimraf coverage dist tmp",
     "check": "npm run lint && npm run codegen",
