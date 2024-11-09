@@ -1,0 +1,60 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["strictUndefinedChecks"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firstName    String
+  lastName     String
+  email        String
+  password     String?
+  transactions Transaction[]
+  lastLogin    DateTime      @default(now())
+  isDeleted    Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Transaction {
+  id        String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type      TransactionType   @default(WITHDRAWAL)
+  amount    Int
+  status    TransactionStatus @default(PENDING)
+  userId    String?           @db.Uuid
+  user      User?             @relation(fields: [userId], references: [id])
+  isDeleted Boolean           @default(false)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+model Download {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  startDate         DateTime
+  endDate           DateTime
+  transactionType   String?
+  transactionStatus String?
+  requestTime       DateTime
+  completionTime    DateTime?
+  link              String?
+  isDeleted         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+enum TransactionType {
+  BUY
+  SELL
+  DEPOSIT
+  WITHDRAWAL
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+}

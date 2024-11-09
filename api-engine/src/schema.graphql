@@ -1,0 +1,112 @@
+scalar Date
+
+type Query {
+  transaction(id: ID!): Transaction!
+  transactionList(
+    take: Int
+    skip: Int
+    cursor: String
+    startDate: String
+    endDate: String
+    type: TransactionType
+    status: TransactionStatus
+  ): TransactionList
+
+  download(id: ID!): Download!
+  downloadList(take: Int, skip: Int, cursor: String): DownloadList!
+}
+
+type Mutation {
+  createUser(data: CreateUserInput!): AuthPayload!
+  login(data: LoginUserInput!): AuthPayload!
+  updateUser(data: UpdateUserInput!): User!
+  deleteUser(id: ID!): User!
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String
+  transactions: [Transaction!]!
+  lastLogin: Date!
+  isDeleted: Boolean!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type Transaction {
+  id: ID!
+  type: TransactionType!
+  amount: Int!
+  status: TransactionStatus!
+  user: User
+  isDeleted: Boolean!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type Download {
+  id: ID!
+  startDate: Date!
+  endDate: Date!
+  transactionType: String
+  transactionStatus: String
+  requestTime: Date!
+  completionTime: Date
+  link: String
+  isDeleted: Boolean!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type TransactionList {
+  count: Int!
+  hasNextPage: Boolean!
+  transactions(take: Int, skip: Int, cursor: String): [Transaction!]!
+}
+
+type DownloadList {
+  count: Int!
+  hasNextPage: Boolean!
+  downloads(take: Int, skip: Int, cursor: String): [Download!]!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+enum TransactionType {
+  ALL
+  BUY
+  SELL
+  DEPOSIT
+  WITHDRAWAL
+}
+
+enum TransactionStatus {
+  ALL
+  PENDING
+  COMPLETED
+}

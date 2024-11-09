@@ -1,0 +1,30 @@
+# Dependency directories
+node_modules/
+
+# Compiled bundle
+dist/
+
+# Dynamically generated
+src/generated/
+
+# Output of 'npm pack'
+*.tgz
+
+# dotenv environment variables file
+.env
+.env.test
+*.env
+**.toml
+
+# Yarn Integrity file
+.yarn-integrity
+.yarn
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache

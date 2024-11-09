@@ -1,0 +1,18 @@
+{
+  "name": "itc-solutions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "find . -name \"noexist\" -type d -prune -exec rm -rf '{}' +; pnpm install --ignore-scripts",
+    "dev": "concurrently --names \"api-engine,client\" -c \"cyan,green\" \"pnpm --prefix api-engine run dev\" \"pnpm --prefix client run dev\"",
+    "build": "concurrently --names \"api-engine,client\" -c \"cyan,green\" \"pnpm --prefix api-engine run build:release\" \"pnpm --prefix client run build\"",
+    "start": "concurrently --names \"api-engine,client\" -c \"cyan,green\" \"pnpm --prefix api-engine run start:prod\" \"pnpm --prefix client run start\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

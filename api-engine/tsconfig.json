@@ -1,0 +1,17 @@
+{
+  "extends": "@tsconfig/node20/tsconfig.json",
+
+  "compilerOptions": {
+    "allowJs": true,
+    "sourceMap": true,
+    "rootDirs": ["./src"],
+    "outDir": "./dist",
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "exactOptionalPropertyTypes": true, // https://github.com/prisma/prisma/releases/tag/5.20.0
+    "noImplicitAny": true,
+    "noImplicitThis": true
+  },
+  "include": ["src/**/*", "prisma"],
+  "exclude": ["node_modules", "dist"]
+}
