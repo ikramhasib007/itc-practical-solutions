@@ -23,10 +23,28 @@ API_URL=http://localhost:4001/graphql
 SUBSCRIPTION_URL=http://localhost:4001/graphql
 ```
 
-And then run from project root directory
+And then run from project root directory these 3 commands
+
+1.
 
 ```
-cd api-engine && pnpm install && pnpm migrate && cd ../client && pnpm install && cd .. && pnpm install && pnpm build && pnpm start
+cd api-engine && pnpm install && pnpm migrate && pnpm dev
+```
+
+> Wait for the message `🚀 Server ready at http://localhost:4001/graphql`. Open new terminal window and navigate root of the project
+
+2.
+
+```
+cd client && pnpm install
+```
+
+> Close all the terminals and open new terminal window (make sure you are in root of the project) and run
+
+3.
+
+```
+pnpm install && pnpm build && pnpm start
 ```
 
 Then go the url at `http://localhost:3000` :)
