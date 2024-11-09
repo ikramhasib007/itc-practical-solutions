@@ -5,7 +5,9 @@
 ## API Engine
 
 - Make sure you have installed PostgreSQL in your machine at `5432` port
+
 - Before starting API Engine, you need to create an env file at `api-engine/config/` location named `dev.env` for development server, `test.env` for test. `prod.env` for production. sample file are given in desired location.
+
 - I used [pnpm](https://pnpm.io/) instead of `npm`
 
 ```
@@ -62,33 +64,17 @@ Then go the url at `http://localhost:4001/graphql`
 - Sample `client/.env.development.local`
 
 ```
-DOMAIN=localhost
-PROTOCOL=http
-PORT=3000
-API_PORT=4001
-
 BASE_URL=http://localhost:3000
 API_URL=http://localhost:4001/graphql
-
-# seconds
-SESSION_EXPIRESIN=7200
-SESSION_TOKEN_SECRET=fSpP96kS23us4RgqE6CbKryVu8x8tQXkKE
+SUBSCRIPTION_URL=http://localhost:4001/graphql
 ```
 
 - Sample `client/.env.production.local`
 
 ```
-DOMAIN=localhost
-PROTOCOL=http
-PORT=3000
-API_PORT=4001
-
 BASE_URL=http://localhost:3000
 API_URL=http://localhost:4001/graphql
-
-# seconds
-SESSION_EXPIRESIN=7200
-SESSION_TOKEN_SECRET=fSpP96kS33ub4RgqE6CbKryVu8x8tQXkKE
+SUBSCRIPTION_URL=http://localhost:4001/graphql
 ```
 
 - Start the development server for Client

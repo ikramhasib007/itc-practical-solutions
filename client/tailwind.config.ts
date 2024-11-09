@@ -9,6 +9,18 @@ const config: Config = {
 	],
 	theme: {
 		extend: {
+			animation: {
+				wiggle: 'wiggle 0.5s ease-in-out infinite',
+				'pulse-1s': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+				bounce200: 'bounce 1s infinite 200ms',
+				bounce400: 'bounce 1s infinite 400ms',
+			},
+			spacing: {
+				'0.25': '0.0625rem',
+				'0.75': '0.1875rem',
+				'1.25': '0.3125rem',
+				'1.75': '0.4375rem',
+			},
 			colors: {
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",
