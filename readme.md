@@ -5,7 +5,7 @@
 ## API Engine
 
 - Make sure you have installed PostgreSQL in your machine at `5432` port
-- Before starting API Engine, you need to create an env file at `config/` location named `dev.env` for development server, `test.env` for test. `prod.env` for production. sample file are given in desired location.
+- Before starting API Engine, you need to create an env file at `api-engine/config/` location named `dev.env` for development server, `test.env` for test. `prod.env` for production. sample file are given in desired location.
 - I used [pnpm](https://pnpm.io/) instead of `npm`
 
 ```
@@ -15,7 +15,7 @@ pnpm migrate
 
 Sample
 
-- `config/dev.env` or `config/prod.env` for production
+- `api-engine/config/dev.env` or `api-engine/config/prod.env` for production
 
 ```
 HTTP_PORT=4001
@@ -24,7 +24,7 @@ JWT_SECRET=boPhVS3jytJKDQGLAFNvEuNZtTFErMiw
 CORS=http://localhost:3000
 ```
 
-- `config/test.env`
+- `api-engine/config/test.env`
 
 ```
 HTTP_PORT=5001
@@ -57,9 +57,9 @@ Then go the url at `http://localhost:4001/graphql`
 
 - Client site development by `Next.js` with [Apollo Client](https://www.apollographql.com/docs/react)
 
-- Before serving the Client site make sure you have created `.env.development.local` for development and `.env.production.local` for production release.
+- Before serving the Client site make sure you have created `client/.env.development.local` for development and `client/.env.production.local` for production release.
 
-- Sample `.env.development.local`
+- Sample `client/.env.development.local`
 
 ```
 DOMAIN=localhost
@@ -75,7 +75,7 @@ SESSION_EXPIRESIN=7200
 SESSION_TOKEN_SECRET=fSpP96kS23us4RgqE6CbKryVu8x8tQXkKE
 ```
 
-- Sample `.env.production.local`
+- Sample `client/.env.production.local`
 
 ```
 DOMAIN=localhost
