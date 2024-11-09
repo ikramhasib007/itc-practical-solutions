@@ -13,8 +13,6 @@ JWT_SECRET=boPhVS3jytJKDQGLAFNvEuNZtTFErMiw
 CORS=http://localhost:3000
 ```
 
-### postgresql connection url details:
-
 - postgresql://[USERNAME]:[PASSWORD]@localhost:5432/[DATABASE_NAME]?schema=public
 
 > Create `.env.production.local` file at `client/` and copy and paste the env details
@@ -50,5 +48,15 @@ pnpm install && pnpm build && pnpm start
 ```
 
 Then go the url at `http://localhost:3000` :)
+
+## More details below
+
+- I used [pnpm](https://pnpm.io/) instead of `npm`
+- Make sure you have installed PostgreSQL in your machine at `5432` port
+- API server are developed using `Node.js` and `GraphQL`
+- [yoga-server](https://the-guild.dev/graphql/yoga-server/docs)
+- [prisma](https://www.prisma.io/docs/getting-started) as ORM
+- Client are developed by `Next.js` with [Apollo Client](https://www.apollographql.com/docs/react)
+- API details: `cd api-engine && pnpm dev` and go to the url at `http://localhost:4001/graphql` for graphical interface
 
 Thank you so much for the project. I'm looking forward to hear from you.
