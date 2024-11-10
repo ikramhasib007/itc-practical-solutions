@@ -70,7 +70,7 @@ function DownloadHistory() {
                   <tbody className="divide-y divide-gray-200 bg-white">
                     <RowsWrapper
                       rows={data?.downloadList?.downloads}
-                      columns={4}
+                      columns={5}
                       loading={loading && !data && networkStatus !== NetworkStatus.refetch}
                       take={LIST_TAKE}
                     >
