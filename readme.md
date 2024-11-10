@@ -4,7 +4,7 @@
 
 ## Instructions
 
-> Create `prod.env` file at `api-engine/config/` and copy and paste the env details
+> Create `dev.env` & `prod.env` file at `api-engine/config/` and copy and paste the env details
 
 ```
 HTTP_PORT=4001
@@ -30,7 +30,7 @@ And then run from project root directory these 3 commands
 1.
 
 ```
-cd api-engine && pnpm install && pnpm migrate:deploy && pnpm build:release && pnpm start:prod
+cd api-engine && pnpm install && pnpm migrate && pnpm dev
 ```
 
 > Wait for the message `🚀 Server ready at http://localhost:4001/graphql`. Open new terminal window and navigate root of the project
