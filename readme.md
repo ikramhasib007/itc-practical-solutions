@@ -30,7 +30,7 @@ And then run from project root directory these 3 commands
 1.
 
 ```
-cd api-engine && pnpm install && pnpm migrate && pnpm dev
+cd api-engine && pnpm install && pnpm migrate && pnpm build:release && pnpm start:prod
 ```
 
 > Wait for the message `🚀 Server ready at http://localhost:4001/graphql`. Open new terminal window and navigate root of the project
