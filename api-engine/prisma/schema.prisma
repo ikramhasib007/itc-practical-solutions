@@ -35,8 +35,8 @@ model Transaction {
 
 model Download {
   id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  startDate         DateTime
-  endDate           DateTime
+  startDate         DateTime?
+  endDate           DateTime?
   transactionType   String?
   transactionStatus String?
   requestTime       DateTime

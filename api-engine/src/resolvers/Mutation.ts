@@ -123,14 +123,33 @@ const Mutation: MutationResolvers<Context> = {
   async generateCSV(parent, args, { prisma }, info) {
     try {
       const { startDate, endDate, type, status } = args
+
+      // Query operation args for transaction
       const transactionOpArgs: Prisma.TransactionFindManyArgs = {
         where: { isDeleted: false },
       }
+      if (args.startDate !== undefined && args.endDate !== undefined) {
+        transactionOpArgs.where = {
+          AND: [
+            {
+              ...transactionOpArgs.where,
+            },
+            {
+              createdAt: {
+                lte: args.endDate!,
+                gte: args.startDate!,
+              },
+            },
+          ],
+        }
+      }
+
+      // Download history create payload
       const data: Prisma.DownloadCreateInput = {
-        startDate,
-        endDate,
         requestTime: new Date().toISOString(),
       }
+      if (startDate) data.startDate = startDate
+      if (endDate) data.endDate = endDate
       if (type) {
         data.transactionType = type
         transactionOpArgs.where = {

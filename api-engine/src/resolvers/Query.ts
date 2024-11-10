@@ -4,30 +4,6 @@ import { PrismaSelect } from '@paljs/plugins'
 import Context from '../context'
 import { Download, QueryResolvers, Transaction } from '../generated/graphql'
 
-export function getMonthDates(startDate: string, endDate: string) {
-  const date = new Date()
-  const startDateObj = beginningOfMonth(date)
-  const lastMonth = startDateObj.getMonth() - 1
-  return {
-    currentMonth: {
-      startDate: () => startDateObj,
-      endDate: () => endOfMonth(date),
-    },
-    lastMonth: {
-      startDate: () => {
-        const now = new Date()
-        const newDate = new Date(now.getFullYear(), now.getMonth() - 1)
-        return beginningOfMonth(newDate)
-      },
-      endDate: () => {
-        const now = new Date()
-        const newDate = new Date(now.getFullYear(), now.getMonth() - 1)
-        return endOfMonth(newDate)
-      },
-    },
-  }
-}
-
 const Query: QueryResolvers<Context> = {
   async transaction(parent, args, { prisma }, info) {
     try {
@@ -94,6 +70,21 @@ const Query: QueryResolvers<Context> = {
                   status: { equals: args.status as TransactionStatus },
                 },
               ],
+            },
+          ],
+        }
+      }
+      if (args.startDate !== undefined && args.endDate !== undefined) {
+        opArgs.where = {
+          AND: [
+            {
+              ...opArgs.where,
+            },
+            {
+              createdAt: {
+                lte: args.endDate!,
+                gte: args.startDate!,
+              },
             },
           ],
         }
@@ -206,37 +197,3 @@ const Query: QueryResolvers<Context> = {
 }
 
 export default Query
-
-/**
- * Returns a date set to the begining of the month
- *
- * @param {Date} myDate
- * @returns {Date}
- */
-function beginningOfMonth(myDate: Date): Date {
-  const date = new Date(myDate)
-  date.setDate(1)
-  date.setHours(0)
-  date.setMinutes(0)
-  date.setSeconds(0)
-  date.setMilliseconds(0)
-  return date
-}
-
-/**
- * Returns a date set to the end of the month
- *
- * @param {Date} myDate
- * @returns {Date}
- */
-function endOfMonth(myDate: Date): Date {
-  const date = new Date(myDate)
-  date.setDate(1) // Avoids edge cases on the 31st day of some months
-  date.setMonth(date.getMonth() + 1)
-  date.setDate(0)
-  date.setHours(23)
-  date.setMinutes(59)
-  date.setSeconds(59)
-  date.setMilliseconds(999)
-  return date
-}

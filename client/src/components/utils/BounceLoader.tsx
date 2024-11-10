@@ -8,7 +8,7 @@ function BounceLoader({
   className = ''
 }: BounceLoaderProps) {
   const containerClassName = className ? `flex ${className}` : 'flex'
-  const circleCommonClasses = 'h-3 w-3 bg-neutral-400 rounded-full';
+  const circleCommonClasses = 'h-2.5 w-2.5 bg-neutral-400 rounded-full';
 
   return (
     <div className={classNames(containerClassName)}>

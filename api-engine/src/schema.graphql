@@ -23,14 +23,14 @@ type Mutation {
   deleteUser(id: ID!): User!
 
   generateCSV(
-    startDate: String!
-    endDate: String!
+    startDate: String
+    endDate: String
     type: TransactionType
     status: TransactionStatus
   ): Boolean!
   generateExcel(
-    startDate: String!
-    endDate: String!
+    startDate: String
+    endDate: String
     type: TransactionType
     status: TransactionStatus
   ): Boolean!
@@ -62,8 +62,8 @@ type Transaction {
 
 type Download {
   id: ID!
-  startDate: Date!
-  endDate: Date!
+  startDate: Date
+  endDate: Date
   transactionType: String
   transactionStatus: String
   requestTime: Date!

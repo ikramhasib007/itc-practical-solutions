@@ -22,6 +22,7 @@ const config: Config = {
 				"0.75": "0.1875rem",
 				"1.25": "0.3125rem",
 				"1.75": "0.4375rem",
+				"2.5": "0.625rem",
 			},
 			colors: {
 				background: "hsl(var(--background))",

@@ -39,8 +39,8 @@ CREATE TABLE "Transaction" (
 -- CreateTable
 CREATE TABLE "Download" (
     "id" UUID NOT NULL DEFAULT gen_random_uuid(),
-    "startDate" TIMESTAMP(3) NOT NULL,
-    "endDate" TIMESTAMP(3) NOT NULL,
+    "startDate" TIMESTAMP(3),
+    "endDate" TIMESTAMP(3),
     "transactionType" TEXT,
     "transactionStatus" TEXT,
     "requestTime" TIMESTAMP(3) NOT NULL,
