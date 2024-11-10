@@ -4,6 +4,9 @@ CREATE TYPE "TransactionType" AS ENUM ('BUY', 'SELL', 'DEPOSIT', 'WITHDRAWAL');
 -- CreateEnum
 CREATE TYPE "TransactionStatus" AS ENUM ('PENDING', 'COMPLETED');
 
+-- CreateEnum
+CREATE TYPE "FileType" AS ENUM ('CSV', 'EXCEL');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" UUID NOT NULL DEFAULT gen_random_uuid(),
@@ -42,7 +45,9 @@ CREATE TABLE "Download" (
     "transactionStatus" TEXT,
     "requestTime" TIMESTAMP(3) NOT NULL,
     "completionTime" TIMESTAMP(3),
-    "link" TEXT,
+    "path" TEXT,
+    "filename" TEXT,
+    "type" "FileType",
     "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

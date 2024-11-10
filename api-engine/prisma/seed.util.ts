@@ -42,6 +42,6 @@ casual.define('download', function (): Prisma.DownloadCreateInput {
     ]),
     requestTime: new Date().toISOString(),
     completionTime: new Date().toISOString(),
-    link: casual.url,
+    path: casual.url,
   }
 })

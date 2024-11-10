@@ -31,7 +31,9 @@ export const CORE_DOWNLOAD_FIELDS = gql`
     transactionStatus
     requestTime
     completionTime
-    link
+    path
+    filename
+    type
     createdAt
     updatedAt
   }

@@ -1,5 +1,5 @@
 import '@/utils/string.extensions'
-import { NetworkStatus, useQuery } from '@apollo/client'
+import { NetworkStatus, useMutation, useQuery } from '@apollo/client'
 import { CreatedAtTime, DateRangePicker, RowsWrapper, SimplePaginationWrapper } from '@/components/utils'
 import { GET_TRANSACTION_LIST } from '../operations/transaction'
 import {
@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { useReducer } from 'react'
 import { TransactionStatus, TransactionType } from '@/__generated__/graphql'
+import { GENERATE_CSV } from '@/operations/download'
 
 const LIST_TAKE = 5
 
@@ -67,6 +68,18 @@ function TransactionHistory() {
     fetchPolicy: 'no-cache',
     notifyOnNetworkStatusChange: true
   })
+  const [mutateGenerateCSV] = useMutation(GENERATE_CSV)
+
+  function handleGenerateCSV() {
+    mutateGenerateCSV({
+      variables: {
+        startDate: new Date().toISOString(),
+        endDate: new Date().toISOString(),
+        type: state.type === 'ALL' ? undefined : state.type,
+        status: state.status === 'ALL' ? undefined : state.status,
+      }
+    })
+  }
 
   return (
     <div>
@@ -81,38 +94,43 @@ function TransactionHistory() {
 
       <div className="pb-4 items-end sm:pb-6 sm:flex sm:justify-end space-y-4 gap-4 sm:space-y-0 sm:gap-6">
         <div className='grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4'>
-          <DateRangePicker />
-          <Select onValueChange={(value: TransactionType) => dispatch({ type: 'set_type', payload: value })}>
-            <SelectTrigger>
-              <SelectValue placeholder="Transaction Type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={TransactionType.All}>All</SelectItem>
-              <SelectItem value={TransactionType.Buy}>Buy</SelectItem>
-              <SelectItem value={TransactionType.Sell}>Sell</SelectItem>
-              <SelectItem value={TransactionType.Deposit}>Deposit</SelectItem>
-              <SelectItem value={TransactionType.Withdrawal}>Withdrawal</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select onValueChange={(value: TransactionStatus) => dispatch({ type: 'set_status', payload: value })}>
-            <SelectTrigger>
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={TransactionStatus.All}>All</SelectItem>
-              <SelectItem value={TransactionStatus.Completed}>Completed</SelectItem>
-              <SelectItem value={TransactionStatus.Pending}>Pending</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button
-            variant="outline"
-            onClick={() => refetch({
-              type: state.type === 'ALL' ? undefined : state.type,
-              status: state.status === 'ALL' ? undefined : state.status,
-            })}
-          >
-            Search
-          </Button>
+          <div className='col-span-1'>
+            <DateRangePicker />
+          </div>
+          <div className='col-span-3 grid grid-cols-4 gap-4'>
+            <Select onValueChange={(value: TransactionType) => dispatch({ type: 'set_type', payload: value })}>
+              <SelectTrigger>
+                <SelectValue placeholder="Transaction Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={TransactionType.All}>All</SelectItem>
+                <SelectItem value={TransactionType.Buy}>Buy</SelectItem>
+                <SelectItem value={TransactionType.Sell}>Sell</SelectItem>
+                <SelectItem value={TransactionType.Deposit}>Deposit</SelectItem>
+                <SelectItem value={TransactionType.Withdrawal}>Withdrawal</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select onValueChange={(value: TransactionStatus) => dispatch({ type: 'set_status', payload: value })}>
+              <SelectTrigger>
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={TransactionStatus.All}>All</SelectItem>
+                <SelectItem value={TransactionStatus.Completed}>Completed</SelectItem>
+                <SelectItem value={TransactionStatus.Pending}>Pending</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button
+              variant="outline"
+              onClick={() => refetch({
+                type: state.type === 'ALL' ? undefined : state.type,
+                status: state.status === 'ALL' ? undefined : state.status,
+              })}
+            >
+              Search
+            </Button>
+            <Button onClick={handleGenerateCSV}>Generate CSV</Button>
+          </div>
         </div>
       </div>
 

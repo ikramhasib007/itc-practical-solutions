@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from "tailwindcss";
+const plugin = require("tailwindcss/plugin");
 
 const config: Config = {
 	darkMode: ["class"],
@@ -10,16 +12,16 @@ const config: Config = {
 	theme: {
 		extend: {
 			animation: {
-				wiggle: 'wiggle 0.5s ease-in-out infinite',
-				'pulse-1s': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-				bounce200: 'bounce 1s infinite 200ms',
-				bounce400: 'bounce 1s infinite 400ms',
+				wiggle: "wiggle 0.5s ease-in-out infinite",
+				"pulse-1s": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+				bounce200: "bounce 1s infinite 200ms",
+				bounce400: "bounce 1s infinite 400ms",
 			},
 			spacing: {
-				'0.25': '0.0625rem',
-				'0.75': '0.1875rem',
-				'1.25': '0.3125rem',
-				'1.75': '0.4375rem',
+				"0.25": "0.0625rem",
+				"0.75": "0.1875rem",
+				"1.25": "0.3125rem",
+				"1.75": "0.4375rem",
 			},
 			colors: {
 				background: "hsl(var(--background))",
@@ -70,7 +72,19 @@ const config: Config = {
 			},
 		},
 	},
-	// eslint-disable-next-line @typescript-eslint/no-require-imports
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		// @ts-expect-error -> tba
+		plugin(function ({ addVariant, e }) {
+			// @ts-expect-error -> tba
+			addVariant("disabled", ({ modifySelectors, separator }) => {
+				// @ts-expect-error -> tba
+				modifySelectors(({ className }) => {
+					return `.${e(`disabled${separator}${className}`)}:disabled`;
+				});
+			});
+		}),
+	],
 };
+
 export default config;

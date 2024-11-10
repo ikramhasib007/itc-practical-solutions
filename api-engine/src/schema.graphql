@@ -21,6 +21,19 @@ type Mutation {
   login(data: LoginUserInput!): AuthPayload!
   updateUser(data: UpdateUserInput!): User!
   deleteUser(id: ID!): User!
+
+  generateCSV(
+    startDate: String!
+    endDate: String!
+    type: TransactionType
+    status: TransactionStatus
+  ): Boolean!
+  generateExcel(
+    startDate: String!
+    endDate: String!
+    type: TransactionType
+    status: TransactionStatus
+  ): Boolean!
 }
 
 type User {
@@ -55,7 +68,9 @@ type Download {
   transactionStatus: String
   requestTime: Date!
   completionTime: Date
-  link: String
+  path: String
+  filename: String
+  type: FileType
   isDeleted: Boolean!
   createdAt: Date!
   updatedAt: Date!
@@ -109,4 +124,9 @@ enum TransactionStatus {
   ALL
   PENDING
   COMPLETED
+}
+
+enum FileType {
+  CSV
+  EXCEL
 }

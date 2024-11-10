@@ -1,4 +1,4 @@
-import 'cross-fetch'
+import 'cross-fetch/polyfill'
 import type { NextConfig } from 'next'
 import getConfig from 'next/config'
 import {

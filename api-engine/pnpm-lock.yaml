@@ -11,6 +11,9 @@ importers:
       '@apollo/subgraph':
         specifier: ^2.9.3
         version: 2.9.3(graphql@16.9.0)
+      '@graphql-yoga/plugin-graphql-sse':
+        specifier: ^3.9.0
+        version: 3.9.0(graphql-yoga@5.9.0(graphql@16.9.0))(graphql@16.9.0)
       '@paljs/plugins':
         specifier: ^7.0.2
         version: 7.0.2(@prisma/client@5.22.0(prisma@5.22.0))(graphql@16.9.0)
@@ -35,9 +38,15 @@ importers:
       helmet:
         specifier: ^7.1.0
         version: 7.2.0
+      json2csv:
+        specifier: 6.0.0-alpha.2
+        version: 6.0.0-alpha.2
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
+      mkdirp:
+        specifier: ^3.0.1
+        version: 3.0.1
     devDependencies:
       '@apollo/client':
         specifier: ^3.11.8
@@ -78,6 +87,9 @@ importers:
       '@types/jest':
         specifier: ^29.5.13
         version: 29.5.14
+      '@types/json2csv':
+        specifier: ^5.0.7
+        version: 5.0.7
       '@types/jsonwebtoken':
         specifier: ^9.0.7
         version: 9.0.7
@@ -114,6 +126,9 @@ importers:
       globals:
         specifier: ^15.9.0
         version: 15.11.0
+      graphql-sse:
+        specifier: ^2.5.3
+        version: 2.5.3(graphql@16.9.0)
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.8.0)(ts-node@10.9.2(@types/node@22.8.0)(typescript@5.6.3))
@@ -1111,6 +1126,13 @@ packages:
     resolution: {integrity: sha512-Mg8psdkAp+YTG1OGmvU+xa6xpsAmSir0hhr3yFYPyLNwzUj95DdIwsMpKadDj9xDpYgJcH3Hp/4JMal9DhQimA==}
     engines: {node: '>=18.0.0'}
 
+  '@graphql-yoga/plugin-graphql-sse@3.9.0':
+    resolution: {integrity: sha512-U/Ojmc5pPr/+PG22LWiul11wJWw5tgyjouhUKamsdjjThtMjNAaQ0SmFfF+faTcwQI8Ffq0wKLDIeHP5mC060g==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      graphql: ^15.2.0 || ^16.0.0
+      graphql-yoga: ^5.9.0
+
   '@graphql-yoga/subscription@5.0.1':
     resolution: {integrity: sha512-1wCB1DfAnaLzS+IdoOzELGGnx1ODEg9nzQXFh4u2j02vAnne6d+v4A7HIH9EqzVdPLoAaMKXCZUUdKs+j3z1fg==}
     engines: {node: '>=18.0.0'}
@@ -1331,6 +1353,9 @@ packages:
   '@sinonjs/fake-timers@10.3.0':
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
 
+  '@streamparser/json@0.0.6':
+    resolution: {integrity: sha512-vL9EVn/v+OhZ+Wcs6O4iKE9EUpwHUqHmCtNUMWjqp+6dr85+XPOSGTEsqYNq1Vn04uk9SWlOVmx9J48ggJVT2Q==}
+
   '@tsconfig/node10@1.0.11':
     resolution: {integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==}
 
@@ -1408,6 +1433,9 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
+
+  '@types/json2csv@5.0.7':
+    resolution: {integrity: sha512-Ma25zw9G9GEBnX8b12R4EYvnFT6dBh8L3jwsN5EUFXa+fl2dqmbLDbNWN0XuQU3rSXdsbBeCYjI9uHU2PUBxhA==}
 
   '@types/jsonwebtoken@9.0.7':
     resolution: {integrity: sha512-ugo316mmTYBl2g81zDFnZ7cfxlut3o+/EQdaP7J8QN2kY6lJ22hmQYCK5EHcJHbrW+dkCGSCPgbG8JtYj6qSrg==}
@@ -1863,6 +1891,10 @@ packages:
 
   commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
+    engines: {node: '>= 6'}
+
+  commander@6.2.1:
+    resolution: {integrity: sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==}
     engines: {node: '>= 6'}
 
   common-tags@1.8.2:
@@ -2403,6 +2435,12 @@ packages:
     peerDependencies:
       graphql: 14 - 16
 
+  graphql-sse@2.5.3:
+    resolution: {integrity: sha512-5IcFW3e7fPOG7oFkK1v3X1wWtCJArQKB/H1UJeNotjy7a/9EYA5K+EiHJF1BiDSVNx7y64bd0FlDETrNBSvIHQ==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      graphql: '>=0.11 <=16'
+
   graphql-tag@2.12.6:
     resolution: {integrity: sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==}
     engines: {node: '>=10'}
@@ -2819,6 +2857,11 @@ packages:
     resolution: {integrity: sha512-rvm6hunfCcqegwYaG5T4yKJWxc9FXFgBVrcTZ4XfSVRwa5HA/Xs+vB/Eo9treYYHCeNM0nrSUr82V/M31Urc7A==}
     engines: {node: '>= 0.2.0'}
 
+  json2csv@6.0.0-alpha.2:
+    resolution: {integrity: sha512-nJ3oP6QxN8z69IT1HmrJdfVxhU1kLTBVgMfRnNZc37YEY+jZ4nU27rBGxT4vaqM/KUCavLRhntmTuBFqZLBUcA==}
+    engines: {node: '>= 12', npm: '>= 6.13.0'}
+    hasBin: true
+
   json5@2.2.3:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
@@ -2874,6 +2917,9 @@ packages:
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
+
+  lodash.get@4.4.2:
+    resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
 
   lodash.includes@4.3.0:
     resolution: {integrity: sha512-W3Bx6mdkRTGtlJISOvVD/lbqjTlPPUDTMnlXZFnVwi9NKJ6tiAk6LVdlhZMm17VZisqhKcgzpO5Wz91PCt5b0w==}
@@ -3030,6 +3076,11 @@ packages:
 
   mkdirp@1.0.4:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
+    engines: {node: '>=10'}
+    hasBin: true
+
+  mkdirp@3.0.1:
+    resolution: {integrity: sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -5308,6 +5359,12 @@ snapshots:
     dependencies:
       tslib: 2.8.0
 
+  '@graphql-yoga/plugin-graphql-sse@3.9.0(graphql-yoga@5.9.0(graphql@16.9.0))(graphql@16.9.0)':
+    dependencies:
+      graphql: 16.9.0
+      graphql-sse: 2.5.3(graphql@16.9.0)
+      graphql-yoga: 5.9.0(graphql@16.9.0)
+
   '@graphql-yoga/subscription@5.0.1':
     dependencies:
       '@graphql-yoga/typed-event-target': 3.0.0
@@ -5661,6 +5718,8 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
+  '@streamparser/json@0.0.6': {}
+
   '@tsconfig/node10@1.0.11': {}
 
   '@tsconfig/node12@1.0.11': {}
@@ -5754,6 +5813,10 @@ snapshots:
   '@types/js-yaml@4.0.9': {}
 
   '@types/json-schema@7.0.15': {}
+
+  '@types/json2csv@5.0.7':
+    dependencies:
+      '@types/node': 22.8.0
 
   '@types/jsonwebtoken@9.0.7':
     dependencies:
@@ -6331,6 +6394,8 @@ snapshots:
       delayed-stream: 1.0.0
 
   commander@4.1.1: {}
+
+  commander@6.2.1: {}
 
   common-tags@1.8.2: {}
 
@@ -6915,6 +6980,10 @@ snapshots:
       graphql: 16.9.0
     transitivePeerDependencies:
       - encoding
+
+  graphql-sse@2.5.3(graphql@16.9.0):
+    dependencies:
+      graphql: 16.9.0
 
   graphql-tag@2.12.6(graphql@16.9.0):
     dependencies:
@@ -7510,6 +7579,12 @@ snapshots:
       remedial: 1.0.8
       remove-trailing-spaces: 1.0.8
 
+  json2csv@6.0.0-alpha.2:
+    dependencies:
+      '@streamparser/json': 0.0.6
+      commander: 6.2.1
+      lodash.get: 4.4.2
+
   json5@2.2.3: {}
 
   jsonfile@6.1.0:
@@ -7577,6 +7652,8 @@ snapshots:
       p-locate: 5.0.0
 
   lodash.debounce@4.0.8: {}
+
+  lodash.get@4.4.2: {}
 
   lodash.includes@4.3.0: {}
 
@@ -7698,6 +7775,8 @@ snapshots:
   minipass@7.1.2: {}
 
   mkdirp@1.0.4: {}
+
+  mkdirp@3.0.1: {}
 
   moment@2.30.1: {}
 

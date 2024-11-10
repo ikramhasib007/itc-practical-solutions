@@ -1,6 +1,16 @@
 import bcrypt from 'bcryptjs'
 import { GraphQLError } from 'graphql'
-import { Prisma } from '@prisma/client'
+import fs from 'node:fs/promises'
+import * as mkdirp from 'mkdirp'
+import nodePath from 'node:path'
+import {
+  FileType,
+  Prisma,
+  TransactionStatus,
+  TransactionType,
+} from '@prisma/client'
+import { Parser } from 'json2csv'
+import { setTimeout as setTimeout$ } from 'node:timers/promises'
 import { MutationResolvers, AuthPayload, User } from '../generated/graphql'
 import Context from '../context'
 import generateToken from '../utils/generateToken'
@@ -9,8 +19,8 @@ import hashPassword from '../utils/hashPassword'
 
 const Mutation: MutationResolvers<Context> = {
   async createUser(parent, args, { prisma }, info) {
-    const { firstName, lastName, email, password } = args.data
     try {
+      const { firstName, lastName, email, password } = args.data
       const data: Prisma.UserCreateInput = {
         firstName,
         lastName,
@@ -105,6 +115,108 @@ const Mutation: MutationResolvers<Context> = {
 
       const [userData] = await prisma.$transaction([deleteUserOps])
       return userData as unknown as User
+    } catch (error: any) {
+      throw new GraphQLError(error)
+    }
+  },
+
+  async generateCSV(parent, args, { prisma }, info) {
+    try {
+      const { startDate, endDate, type, status } = args
+      const transactionOpArgs: Prisma.TransactionFindManyArgs = {
+        where: { isDeleted: false },
+      }
+      const data: Prisma.DownloadCreateInput = {
+        startDate,
+        endDate,
+        requestTime: new Date().toISOString(),
+      }
+      if (type) {
+        data.transactionType = type
+        transactionOpArgs.where = {
+          AND: [
+            {
+              ...transactionOpArgs.where,
+            },
+            {
+              type: { equals: type as TransactionType },
+            },
+          ],
+        }
+      }
+      if (status) {
+        data.transactionStatus = status
+        transactionOpArgs.where = {
+          AND: [
+            {
+              ...transactionOpArgs.where,
+            },
+            {
+              status: { equals: status as TransactionStatus },
+            },
+          ],
+        }
+      }
+
+      // Creating download history
+      const download = await prisma.download.create({
+        data,
+      })
+
+      // Waiting time
+      await setTimeout$(+process.env.WAITING_TIME_FRAME! || 10000)
+
+      const transactionsList =
+        await prisma.transaction.findMany(transactionOpArgs)
+
+      const fields = [
+        {
+          label: 'Transaction Type',
+          value: 'type',
+        },
+        {
+          label: 'Transaction Status',
+          value: 'status',
+        },
+        {
+          label: 'Amount',
+          value: 'amount',
+        },
+        {
+          label: 'Created At',
+          value: 'createdAt',
+        },
+      ]
+      const json2csvParser = new Parser({ fields })
+      const csv = json2csvParser.parse(transactionsList)
+
+      const uploadDir = './downloads'
+      const filename = `transactions-${new Date().toISOString()}.csv`
+      const filePath = `${uploadDir}/${filename}`
+      setTimeout(async () => {
+        try {
+          // Ensures that the downloads directory exists
+          mkdirp.mkdirpSync(uploadDir)
+          await fs.writeFile(nodePath.join(process.cwd(), filePath), csv)
+
+          // Updating the download histroy
+          await prisma.download.update({
+            where: {
+              id: download.id,
+            },
+            data: {
+              completionTime: new Date().toISOString(),
+              path: filePath.replace('./', ''),
+              filename,
+              type: FileType.CSV,
+            },
+          })
+        } catch (err: any) {
+          throw new GraphQLError(err)
+        }
+      }, 0)
+
+      return download !== null
     } catch (error: any) {
       throw new GraphQLError(error)
     }

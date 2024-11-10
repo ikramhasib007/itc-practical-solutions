@@ -41,7 +41,9 @@ model Download {
   transactionStatus String?
   requestTime       DateTime
   completionTime    DateTime?
-  link              String?
+  path              String?
+  filename          String?
+  type              FileType?
   isDeleted         Boolean   @default(false)
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
@@ -57,4 +59,9 @@ enum TransactionType {
 enum TransactionStatus {
   PENDING
   COMPLETED
+}
+
+enum FileType {
+  CSV
+  EXCEL
 }

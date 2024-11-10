@@ -2,12 +2,15 @@ import '../utils/date.extensions'
 import express from 'express'
 import helmet from 'helmet'
 import { readFileSync } from 'node:fs'
+import path from 'node:path'
 import { createYoga, maskError, useExtendContext } from 'graphql-yoga'
+import { useGraphQLSSE } from '@graphql-yoga/plugin-graphql-sse'
 import { createFetch } from '@whatwg-node/fetch'
 import { buildSubgraphSchema } from '@apollo/subgraph'
 import { parse } from 'graphql'
 import { resolvers } from '../resolvers'
 import prisma from '../prisma'
+import { pubSub } from '../pubsub'
 
 const typeDefs = parse(readFileSync('./src/schema.graphql', 'utf8'))
 
@@ -29,7 +32,7 @@ const yoga = createYoga({
     methods: ['POST'],
   },
   schema,
-  plugins: [useExtendContext(() => ({ prisma }))],
+  plugins: [useExtendContext(() => ({ pubSub, prisma })), useGraphQLSSE()],
   graphiql: process.env.NODE_ENV !== 'production',
   healthCheckEndpoint: '/live',
   fetchAPI: createFetch({
@@ -75,6 +78,10 @@ export function buildApp(app: ReturnType<typeof express>) {
 
   // First register the router, to avoid Global CSP configuration to override the specific one
   app.use(yoga.graphqlEndpoint, router)
+
+  // Static path defined to serve files
+  const pathDir = path.join(__dirname, `../../downloads`)
+  app.use('/downloads', express.static(pathDir))
 
   // Global CSP configuration
   app.use(helmet())

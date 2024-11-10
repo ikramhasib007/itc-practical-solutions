@@ -43,3 +43,5 @@ next-env.d.ts
 src/generated/
 **/src/generated/
 **/src/__generated__/
+
+**/downloads/

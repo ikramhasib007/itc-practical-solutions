@@ -11,9 +11,11 @@ HTTP_PORT=4001
 DATABASE_URL="postgresql://postgres:1234@localhost:5432/itc_solutions?schema=public"
 JWT_SECRET=boPhVS3jytJKDQGLAFNvEuNZtTFErMiw
 CORS=http://localhost:3000
+# milliseconds
+WAITING_TIME_FRAME=10000
 ```
 
-- postgresql://[USERNAME]:[PASSWORD]@localhost:5432/[DATABASE_NAME]?schema=public
+- postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA
 
 > Create `.env.production.local` file at `client/` and copy and paste the env details
 

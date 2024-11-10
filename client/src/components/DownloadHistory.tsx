@@ -1,11 +1,18 @@
+import type { NextConfig } from 'next'
+import getConfig from 'next/config'
+import { useQuery, NetworkStatus } from '@apollo/client'
 import {
+  BounceLoader,
   CreatedAtTime,
   DateTimeHtmlEntity,
   RowsWrapper,
   SimplePaginationWrapper,
 } from '@/components/utils'
+import { classNames } from '@/lib/utils'
 import { GET_DOWNLOAD_LIST } from '@/operations/download'
-import { useQuery, NetworkStatus } from '@apollo/client'
+
+const { publicRuntimeConfig }: NextConfig = getConfig()
+const staticUrl = (publicRuntimeConfig!.API_PATH as string).replace('/graphql', '')
 
 const LIST_TAKE = 5
 
@@ -13,7 +20,8 @@ function DownloadHistory() {
   const { data, loading, refetch, networkStatus } = useQuery(GET_DOWNLOAD_LIST, {
     variables: { take: LIST_TAKE },
     fetchPolicy: 'no-cache',
-    notifyOnNetworkStatusChange: true
+    notifyOnNetworkStatusChange: true,
+    pollInterval: 1000 // Polling
   })
 
   return (
@@ -85,12 +93,22 @@ function DownloadHistory() {
                           <td className="whitespace-normal px-3 py-4 text-sm font-medium text-gray-700">
                             <DateTimeHtmlEntity dateTime={item.requestTime} format='DD-MMM-YY HH:mmA' />
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-700">
-                            <CreatedAtTime data={item} />
+                          <td className="relative whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-700">
+                            {!item.completionTime ? <div className='relative flex items-center'>
+                              <span className='text-sm text-gray-600'>Processing {' '}</span> <BounceLoader className='mt-1 pl-1' />
+                            </div> : <CreatedAtTime data={item} />}
                           </td>
                           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">
-                            <a href="#" target={item.link!} className="text-indigo-600 hover:text-indigo-900">
-                              Link<span className="sr-only">, {item.link}</span>
+                            <a
+                              href={`${staticUrl}/${item.path}`}
+                              target="_blank"
+                              className={classNames(
+                                !item.completionTime
+                                  ? 'pointer-events-none text-primary/40'
+                                  : 'text-indigo-600 hover:text-indigo-900'
+                              )}
+                            >
+                              Link<span className="sr-only">, {item.filename}</span>
                             </a>
                           </td>
                         </tr>
