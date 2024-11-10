@@ -51,6 +51,7 @@ Then go the url at `http://localhost:3000` :)
 
 ## More details below
 
+- The location of the database seed file `api-engine/prisma/seed.ts`
 - I used [pnpm](https://pnpm.io/) instead of `npm`
 - Make sure you have installed PostgreSQL in your machine at `5432` port
 - API server are developed using `Node.js` and `GraphQL`

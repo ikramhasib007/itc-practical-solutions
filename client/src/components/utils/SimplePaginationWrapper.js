@@ -44,10 +44,14 @@ function SimplePaginationWrapper({ children, refetch, take = 10, list, container
           {(list && list.count) ? <p className="text-sm text-gray-700">
             Showing <span className="font-medium">{state.skip + 1}</span> to <span className="font-medium">{(state.take + state.skip) > list.count ? list.count : state.take + state.skip}</span> of{' '}
             <span className="font-medium">{list.count}</span> results
-          </p> :
-            <div className="animate-pulse-1s">
+          </p> : <>
+            {(list && list.count === 0) ? <p className="text-sm text-gray-700">
+              Showing <span className="font-medium">0</span> of{' '}
+              <span className="font-medium">0</span> results
+            </p> : <div className="animate-pulse-1s">
               <div className="h-5 w-48 bg-slate-200 rounded" />
             </div>}
+          </>}
         </div>
         <div className="flex-1 flex justify-between sm:justify-end">
           <a
