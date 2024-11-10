@@ -5,18 +5,13 @@ import {
   DialogPanel,
   TransitionChild,
 } from "@headlessui/react";
-import {
-  Bars3Icon,
-  DocumentDuplicateIcon,
-  HomeIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { Bars3Icon, HomeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { classNames } from "@/lib/utils";
 import TransactionHistory from "@/components/TransactionHistory";
+import DownloadHistory from "@/components/DownloadHistory";
 
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
 ];
 
 interface LayoutProps extends PropsWithChildren {
@@ -195,7 +190,10 @@ export default function Layout({ title, children }: LayoutProps) {
         <main className='py-10 lg:pl-72'>
           <div className='relative px-4 sm:px-6 lg:px-8'>
             {/* Your content */}
-            <TransactionHistory />
+            <div className='space-y-8 sm:space-y-12 xl:space-y-16'>
+              <TransactionHistory />
+              <DownloadHistory />
+            </div>
           </div>
         </main>
       </div>

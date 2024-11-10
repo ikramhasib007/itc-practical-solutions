@@ -69,7 +69,7 @@ function TransactionHistory() {
   })
 
   return (
-    <>
+    <div>
       <div className="mb-4 sm:mb-6 sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-xl font-semibold text-gray-900">Transaction list</h1>
@@ -175,7 +175,7 @@ function TransactionHistory() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

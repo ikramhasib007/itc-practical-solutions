@@ -53,7 +53,18 @@ async function main() {
   ]
 
   const transactions = await prisma.$transaction(createTransactions)
-  console.log(JSON.stringify({ users, transactions }, undefined, 2))
+
+  const createDownloads = [
+    ...Array.from({ length: 20 }, (v, i) =>
+      prisma.download.create({
+        data: casual.download,
+      })
+    ),
+  ]
+
+  const downloads = await prisma.$transaction(createDownloads)
+
+  console.log(JSON.stringify({ users, transactions, downloads }, undefined, 2))
 }
 
 main()
