@@ -4,6 +4,8 @@
 
 ## Instructions
 
+### [video](https://drive.google.com/file/d/1RrVwAofJEegWUKoUwDeKIgQzKQsLGhwU/view?usp=sharing)
+
 > Create `dev.env` & `prod.env` file at `api-engine/config/` and copy and paste the env details
 
 ```
