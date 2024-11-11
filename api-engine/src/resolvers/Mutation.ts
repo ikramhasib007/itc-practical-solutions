@@ -215,7 +215,7 @@ const Mutation: MutationResolvers<Context> = {
       try {
         // Ensures that the downloads directory exists
         mkdirp.mkdirpSync(uploadDir)
-        fs.writeFileSync(nodePath.join(process.cwd(), filePath), csv)
+        fs.writeFileSync(nodePath.join(__dirname, '../../', filePath), csv)
 
         setTimeout(async () => {
           // Updating the download histroy
