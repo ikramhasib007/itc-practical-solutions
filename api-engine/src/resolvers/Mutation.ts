@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import { GraphQLError } from 'graphql'
-import fs from 'node:fs/promises'
+import fs from 'node:fs'
 import * as mkdirp from 'mkdirp'
 import nodePath from 'node:path'
 import {
@@ -212,12 +212,12 @@ const Mutation: MutationResolvers<Context> = {
       const uploadDir = './downloads'
       const filename = `transactions-${new Date().toISOString()}.csv`
       const filePath = `${uploadDir}/${filename}`
-      setTimeout(async () => {
-        try {
-          // Ensures that the downloads directory exists
-          mkdirp.mkdirpSync(uploadDir)
-          await fs.writeFile(nodePath.join(process.cwd(), filePath), csv)
+      try {
+        // Ensures that the downloads directory exists
+        mkdirp.mkdirpSync(uploadDir)
+        fs.writeFileSync(nodePath.join(process.cwd(), filePath), csv)
 
+        setTimeout(async () => {
           // Updating the download histroy
           await prisma.download.update({
             where: {
@@ -230,10 +230,10 @@ const Mutation: MutationResolvers<Context> = {
               type: FileType.CSV,
             },
           })
-        } catch (err: any) {
-          throw new GraphQLError(err)
-        }
-      }, 0)
+        }, 0)
+      } catch (err: any) {
+        throw new GraphQLError(err.message)
+      }
 
       return download !== null
     } catch (error: any) {
